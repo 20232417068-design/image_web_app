@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Image Processing Web App</title>
+    <style>
+        body { text-align: center; font-family: Arial; background: #f4f4f4; }
+        select, input[type="file"], button {
+            margin-top: 10px; padding: 8px; font-size: 14px;
+        }
+        .image-row { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
+        img { border: 2px solid #ccc; border-radius: 8px; }
+        .operation-name { font-weight: bold; color: #0078D7; margin-top: 15px; font-size: 18px; }
+    </style>
+    <script>
+        function autoSubmitForm() { document.getElementById('uploadForm').submit(); }
+    </script>
+</head>
+<body>
+    <h1>🧠 Advanced Image Processing Web Application</h1>
+    <form id="uploadForm" action="/process" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*"><br><br>
+
+        <select name="operation" onchange="autoSubmitForm()">
+            <option value="none">Select Operation</option>
+            <option value="gray">Grayscale</option>
+            <option value="blur">Gaussian Blur</option>
+            <option value="edge">Edge Detection</option>
+            <option value="rotate">Rotation (45°)</option>
+            <option value="translate">Translation</option>
+            <option value="scale">Scaling (1.5x)</option>
+            <option value="brightness">Brightness</option>
+            <option value="contrast">Contrast</option>
+            <option value="gray_slice_preserve">Gray-level Slicing (Preserve)</option>
+            <option value="gray_slice_nopreserve">Gray-level Slicing (No Preserve)</option>
+            <option value="log">Logarithmic Transform</option>
+            <option value="power">Power-law (Gamma)</option>
+            <option value="zoom">Zoom (Center)</option>
+            <option value="inverse_filter">Inverse Filtering</option>
+            <option value="pseudo_inverse">Pseudo Inverse</option>
+            <option value="wiener">Wiener Filtering</option>
+            <option value="median">Median Filtering</option>
+            <option value="laplacian">Laplacian Operator</option>
+            <option value="dog">Difference of Gaussian (DoG)</option>
+            <option value="btc">BTC Compression</option>
+            <option value="histogram">Histogram Equalization</option>
+        </select><br><br>
+
+        <button type="submit">Process</button>
+    </form>
+
+    {% if output_image %}
+    <div class="operation-name">Operation Applied: {{ operation_name }}</div>
+    <div class="image-row">
+        <div>
+            <h3>Original</h3>
+            <img src="{{ url_for('static', filename=uploaded_image) }}" width="350">
+        </div>
+        <div>
+            <h3>Processed</h3>
+            <img src="{{ url_for('static', filename=output_image) }}" width="350">
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
