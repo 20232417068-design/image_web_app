@@ -259,17 +259,6 @@ def process_image():
                            operation_name=op_name)
 
 
-
-
-
-import threading, webview
-
-def start_flask():
-    app.run(debug=False, port=5000)
-
+# ---------- Run Server ----------
 if __name__ == '__main__':
-    t = threading.Thread(target=start_flask)
-    t.daemon = True
-    t.start()
-    webview.create_window("Image Processing App", "http://127.0.0.1:5000", width=1200, height=800)
-    webview.start()
+    app.run(host='0.0.0.0', port=5000)
